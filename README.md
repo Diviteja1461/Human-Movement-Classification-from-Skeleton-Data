@@ -52,15 +52,45 @@ Each CSV has ~300 rows. Rows 0–149 are duplicates (no angle features), rows 15
 
 ## Models & Results
 
-| Model | Val Accuracy | Val F1 | Parameters |
-|---|---|---|---|
-| Random Forest (baseline) | 79.9% | 79.7% | 6.09M |
-| LSTM | 83.8% | 83.7% | 275,461 |
-| **GRU ⭐ (best)** | **93.6%** | **93.6%** | **209,413** |
-| Transformer | 88.0% | 88.0% | 408,709 |
-| BiLSTM | 88.0% | 88.1% | 678,917 |
+| Model | Val Accuracy | Val F1 | Parameters | Train Time |
+|---|---|---|---|---|
+| Random Forest (baseline) | 79.9% | 79.7% | 6.09M | 0.6s |
+| LSTM | 83.8% | 83.7% | 275,461 | 272.8s |
+| **GRU ⭐ (best)** | **93.6%** | **93.6%** | **209,413** | 273.7s |
+| Transformer | 88.0% | 88.0% | 408,709 | 127.7s |
+| BiLSTM | 88.0% | 88.1% | 678,917 | 616.2s |
 
 **GRU wins** — fewest parameters among deep models → least overfitting on 934 training files.
+
+---
+
+## Streamlit App Features
+
+The `app.py` includes a full interactive demo with 4 tabs:
+- **Classify** — upload a skeleton CSV and get live predictions from all 4 models
+- **Dataset Explorer** — visualise class distribution, sequence lengths, and skeleton animations
+- **Model Comparison** — bar charts and metrics table comparing all models
+- **About** — project overview and how to run locally
+
+---
+
+## How to Run Locally
+
+```bash
+# 1. Clone the repo
+git clone https://github.com/Diviteja1461/Human-Movement-Classification-from-Skeleton-Data.git
+cd Human-Movement-Classification-from-Skeleton-Data
+
+# 2. Install dependencies
+pip install streamlit torch pandas numpy matplotlib scikit-learn scipy tqdm
+
+# 3. Add trained model files (from your notebook)
+# Place gru_model.pt, lstm_model.pt, transformer_model.pt, bilstm_model.pt
+# in the same folder as app.py
+
+# 4. Run the app
+streamlit run app.py
+```
 
 ---
 
@@ -90,14 +120,13 @@ Each CSV has ~300 rows. Rows 0–149 are duplicates (no angle features), rows 15
 
 ## Tech Stack
 
-- Python, PyTorch, scikit-learn
-- NumPy, Pandas, Matplotlib, Seaborn
+- Python, PyTorch, Streamlit
+- scikit-learn, NumPy, Pandas
+- Matplotlib, Seaborn, SciPy
 - CUDA (GPU training)
 
 ---
 
 ## References
 
-- **DeepGRU**: Maghoumi & LaViola (2018) — arXiv:1810.12514
 - **Attention Is All You Need**: Vaswani et al. (2017) — arXiv:1706.03762
-- **OpenPose**: Cao et al. (2019) — Realtime Multi-Person 2D Pose Estimation
